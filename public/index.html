@@ -1,0 +1,425 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0f11">
+  <title>NEXUS — Core</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div>
+        <div class="brand-name">NEXUS</div>
+        <div class="brand-sub">CORE / 0.4</div>
+      </div>
+    </div>
+
+    <div class="nav-label">WORKSPACE</div>
+
+    <a class="nav-item active" href="#overview">
+      <span class="nav-icon">◫</span> Overview
+    </a>
+
+    <a class="nav-item" href="#missions">
+      <span class="nav-icon">◈</span>
+      Missions
+      <span class="nav-count" id="missionNavCount">0</span>
+    </a>
+
+    <a class="nav-item" href="#projects">
+      <span class="nav-icon">▣</span> Projects
+    </a>
+
+    <div class="nav-label">SYSTEM</div>
+
+    <a class="nav-item" href="#machines">
+      <span class="nav-icon">⌘</span> Machines
+    </a>
+
+    <a class="nav-item" href="#activity">
+      <span class="nav-icon">◷</span> Activity
+    </a>
+
+    <div class="sidebar-bottom">
+      <div class="connection-dot"></div>
+      <span>LOCAL HUB ONLINE</span>
+      <span class="version">v0.4.0</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="topbar">
+      <div class="breadcrumb">
+        NEXUS <span>/</span> CONTROL CENTER
+      </div>
+
+      <div class="top-right">
+        <span class="live-dot"></span>
+        <span>LOCAL INSTANCE</span>
+        <div class="avatar">A</div>
+      </div>
+    </header>
+
+    <section class="page" id="overview">
+
+      <div class="page-heading">
+        <div>
+          <div class="eyebrow">DEVELOPMENT OPERATIONS</div>
+          <h1>Control center<span class="accent">.</span></h1>
+          <p>One workspace. Multiple agents. Controlled execution.</p>
+        </div>
+
+        <button class="primary" id="newMissionBtn">
+          <span>＋</span> New mission
+        </button>
+      </div>
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-label">MISSIONS</div>
+          <div class="stat-value" id="statMissions">00</div>
+          <div class="stat-foot">Total tracked</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">QUEUED</div>
+          <div class="stat-value" id="statQueued">00</div>
+          <div class="stat-foot">Awaiting execution</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">PROJECTS</div>
+          <div class="stat-value" id="statProjects">00</div>
+          <div class="stat-foot">Active workspaces</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">MACHINES</div>
+          <div class="stat-value" id="statMachines">01</div>
+          <div class="stat-foot">
+            <span class="online-text">● 1 online</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="content-grid">
+
+        <section class="panel missions-panel" id="missions">
+
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">TASK QUEUE</div>
+              <h2>Mission board</h2>
+            </div>
+
+            <button class="ghost" id="refreshBtn">
+              ↻ Refresh
+            </button>
+          </div>
+
+          <div class="filter-row">
+            <span>ALL MISSIONS</span>
+            <span class="filter-active">RECENT</span>
+          </div>
+
+          <div id="missionList" class="mission-list"></div>
+
+        </section>
+
+        <section class="panel machine-panel" id="machines">
+
+          <div class="panel-head">
+            <div>
+              <div class="eyebrow">CONNECTED COMPUTE</div>
+              <h2>Machines</h2>
+            </div>
+
+            <span class="pill online">● ONLINE</span>
+          </div>
+
+          <div id="machineList"></div>
+
+          <div class="machine-note">
+            <span class="note-icon">⌁</span>
+            <div>
+              <strong>Multi-machine is coming</strong>
+              <p>
+                Core currently tracks this local hub.
+                Remote agent pairing will be added in a later phase.
+              </p>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+      <section class="panel activity-panel" id="activity">
+
+        <div class="panel-head">
+          <div>
+            <div class="eyebrow">SYSTEM EVENTS</div>
+            <h2>Activity log</h2>
+          </div>
+
+          <span class="muted">LATEST EVENTS</span>
+        </div>
+
+        <div id="activityList" class="activity-list"></div>
+
+      </section>
+
+      <section class="panel projects-panel" id="projects">
+
+        <div class="panel-head">
+
+          <div>
+            <div class="eyebrow">WORKSPACES</div>
+            <h2>Projects</h2>
+          </div>
+
+          <div class="project-toolbar">
+
+            <button class="ghost" id="importGithubBtn">
+              ↗ Import GitHub
+            </button>
+
+            <button class="ghost" id="newProjectBtn">
+              ＋ Add project
+            </button>
+
+          </div>
+
+        </div>
+
+        <div id="projectList" class="project-list"></div>
+
+      </section>
+
+      <footer>
+        NEXUS CORE
+        <span>SELF-HOSTED · OPEN SOURCE · YOUR INFRASTRUCTURE</span>
+      </footer>
+
+    </section>
+  </main>
+</div>
+
+<!-- MISSION MODAL -->
+
+<div class="modal-backdrop hidden" id="missionModal">
+
+  <form class="modal" id="missionForm">
+
+    <button type="button" class="modal-close" data-close>×</button>
+
+    <div class="eyebrow">MISSION CREATION</div>
+    <h2>Queue new mission</h2>
+
+    <label>
+      Mission title
+      <input
+        name="title"
+        required
+        placeholder="e.g. Audit API routes"
+      >
+    </label>
+
+    <label>
+      Details
+      <textarea
+        name="details"
+        rows="3"
+        placeholder="Describe what needs to be done..."
+      ></textarea>
+    </label>
+
+    <label>
+      Project
+      <select name="projectId" id="projectSelect">
+        <option value="">No project</option>
+      </select>
+    </label>
+
+    <label>
+      Execution task
+      <select name="executionType">
+        <option value="inspect">Inspect workspace (safe)</option>
+        <option value="git_status">Git status</option>
+        <option value="npm_test">Run tests</option>
+        <option value="npm_build">Build project</option>
+      </select>
+    </label>
+
+    <div class="modal-actions">
+      <button type="button" class="ghost" data-close>
+        Cancel
+      </button>
+
+      <button class="primary" type="submit">
+        Queue mission →
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<!-- LOCAL PROJECT MODAL -->
+
+<div class="modal-backdrop hidden" id="projectModal">
+
+  <form class="modal" id="projectForm">
+
+    <button type="button" class="modal-close" data-close>×</button>
+
+    <div class="eyebrow">WORKSPACE CREATION</div>
+    <h2>New project</h2>
+
+    <label>
+      Project name
+      <input name="name" required placeholder="Project name">
+    </label>
+
+    <label>
+      Description
+      <textarea
+        name="description"
+        rows="3"
+        placeholder="What is this project?"
+      ></textarea>
+    </label>
+
+    <label>
+      Workspace folder path
+      <input
+        name="workspacePath"
+        placeholder="C:\Projects\my-app"
+      >
+    </label>
+
+    <div class="modal-actions">
+      <button type="button" class="ghost" data-close>
+        Cancel
+      </button>
+
+      <button class="primary" type="submit">
+        Create project →
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<!-- GITHUB IMPORT MODAL -->
+
+<div class="modal-backdrop hidden" id="githubImportModal">
+
+  <form class="modal" id="githubImportForm">
+
+    <button type="button" class="modal-close" data-close>×</button>
+
+    <div class="eyebrow">REPOSITORY IMPORT</div>
+    <h2>Import GitHub project</h2>
+
+    <p class="stat-foot">
+      Clone a public GitHub repository into your NEXUS workspace.
+    </p>
+
+    <label>
+      Repository URL
+      <input
+        type="url"
+        name="url"
+        id="githubRepoUrl"
+        required
+        placeholder="https://github.com/username/repository"
+      >
+    </label>
+
+    <label>
+      Project name (optional)
+      <input
+        name="name"
+        id="githubProjectName"
+        placeholder="Auto-detected from repository"
+      >
+    </label>
+
+    <div class="machine-note">
+      <span class="note-icon">⌘</span>
+      <div>
+        <strong>Import details</strong>
+        <p>
+          Public repositories only in this version.
+          Git must be installed on your computer.
+          The repository will be cloned into the NEXUS workspace.
+        </p>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+
+      <button type="button" class="ghost" data-close>
+        Cancel
+      </button>
+
+      <button class="primary" type="submit" id="githubImportSubmit">
+        Import repository →
+      </button>
+
+    </div>
+
+  </form>
+
+</div>
+
+<!-- WORKSPACE BROWSER MODAL -->
+
+<div class="modal-backdrop hidden" id="workspaceModal">
+
+  <div class="modal workspace-modal">
+
+    <button type="button" class="modal-close" data-close>×</button>
+
+    <div class="eyebrow">WORKSPACE CONTROL</div>
+
+    <h2 id="workspaceTitle">Workspace</h2>
+
+    <div class="workspace-path" id="workspacePath">/</div>
+
+    <div class="workspace-browser">
+
+      <div id="workspaceItems" class="workspace-items"></div>
+
+      <div class="workspace-preview">
+        <div id="previewLabel">Select a file to preview</div>
+        <pre id="workspacePreview">Read-only preview. File size limit: 300 KB.</pre>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="ghost" data-close>
+        Close
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/app.js"></script>
+
+</body>
+</html>

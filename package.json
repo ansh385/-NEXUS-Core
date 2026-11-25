@@ -1,0 +1,13 @@
+{
+  "name": "nexus-core",
+  "version": "0.3.0",
+  "private": false,
+  "description": "Self-hosted open-source development task control center",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
