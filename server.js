@@ -335,7 +335,7 @@ function runAllowedTask(mission, taskType) {
 
   const child = spawn(task.command, task.args, {
     cwd: workspace,
-    shell: process.platform === 'win32',
+    shell: process.platform === 'win32' && task.command === 'npm',
     windowsHide: true,
     env: {
       ...process.env,
