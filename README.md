@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/nexus-logo.svg" alt="NEXUS Core logo" />
+
 <img src="assets/nexus-banner.svg" alt="NEXUS Core banner" width="100%"/>
 
 ### A local development control center
