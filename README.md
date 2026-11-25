@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="assets/nexus-logo.svg" alt="NEXUS Core logo" />
-
 <img src="assets/nexus-banner.svg" alt="NEXUS Core banner" width="100%"/>
 
 ### A local development control center
@@ -178,7 +176,9 @@ Ideas, bug reports, and improvements are welcome.
 
 ## License
 
-Check the repository for license details before redistributing or modifying NEXUS Core. If no license file is present, all rights are reserved by default.
+NEXUS Core is licensed under the **MIT License**. See [`LICENSE`](LICENSE) for the full license text.
+
+You are free to use, modify, distribute, and sublicense this software, including for commercial use, subject to the license terms.
 
 ## Links
 
